@@ -20,6 +20,11 @@ class MyApp extends StatelessWidget {
           primary: const Color(0xFFC1007E),
           secondary: const Color(0xFF9E9E9E),
         ),
+        toggleableActiveColor: const Color(0xFFC1007E),
+        iconTheme: const IconThemeData(
+          color: Color(0xFFC1007E),
+        ),
+        listTileTheme: const ListTileThemeData(iconColor: Color(0xFFC1007E)),
       ),
       home: const ToDoPage(),
     );

@@ -11,16 +11,17 @@ class ListTaskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: listToDo.length,
-        itemBuilder: (_, index) {
-          var task = listToDo[index];
-          return TaskItemWidget(
-            title: task.description,
-            completed: task.completed,
-            onChanged: (value) => onChanged(value, index),
-          );
-        });
+    return Expanded(
+      child: ListView.builder(
+          itemCount: listToDo.length,
+          itemBuilder: (_, index) {
+            var task = listToDo[index];
+            return TaskItemWidget(
+              title: task.description,
+              completed: task.completed,
+              onChanged: (value) => onChanged(value, index),
+            );
+          }),
+    );
   }
 }

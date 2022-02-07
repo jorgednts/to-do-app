@@ -14,18 +14,21 @@ class TaskItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      value: completed,
-      onChanged: (value) {
-        onChanged;
-      },
-      title: Text(
-        title,
-        style: TextStyle(
-          decoration: completed ? TextDecoration.lineThrough : null,
+    return Dismissible(
+      key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+      child: CheckboxListTile(
+        value: completed,
+        onChanged: (value) {
+          onChanged;
+        },
+        title: Text(
+          title,
+          style: TextStyle(
+            decoration: completed ? TextDecoration.lineThrough : null,
+          ),
         ),
+        secondary: Icon(completed ? Icons.check_circle : Icons.error),
       ),
-      secondary: Icon(completed ? Icons.check_circle : Icons.error),
     );
   }
 }

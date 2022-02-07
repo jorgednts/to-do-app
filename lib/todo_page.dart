@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/components/add_task_widget.dart';
+import 'package:to_do_app/components/list_task_widget.dart';
 
 class ToDoPage extends StatefulWidget {
   const ToDoPage({Key? key}) : super(key: key);
@@ -8,6 +10,19 @@ class ToDoPage extends StatefulWidget {
 }
 
 class _ToDoPageState extends State<ToDoPage> {
+  TextEditingController textController = TextEditingController();
+  List<TaskModel> listToDo = [];
+
+  void addToDo() {
+    var newTask = TaskModel(description: textController.text);
+    listToDo.add(newTask);
+    textController.text = '';
+  }
+
+  void updateStatusTask(bool? value, int index) {
+    listToDo[index].completed = value ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,23 +43,35 @@ class _ToDoPageState extends State<ToDoPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Text("ADD"),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(17, 24, 17, 40),
+                child: InputTaskWidget(
+                  labelText: 'Nova Tarefa',
+                  textButton: 'ADD',
+                  textController: textController,
+                  onPressed: () {
+                    setState(() {
+                      addToDo();
+                    });
+                  },
+                )),
             Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (_, index) {
-                  return CheckboxListTile(
-                    value: false,
-                    onChanged: (value) {},
-                    title: Text('num $index'),
-                    secondary: const Icon(Icons.check_circle),
-                  );
-                },
-              ),
+              child: ListTaskWidget(
+                  listToDo: listToDo,
+                  onChanged: (value, index) => setState(() {
+                        updateStatusTask(value, index);
+                      })),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+class TaskModel {
+  bool completed;
+  String description;
+
+  TaskModel({this.completed = false, required this.description});
 }
